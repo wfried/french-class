@@ -123,10 +123,6 @@ const translations = {
     fr: 'Exemples',
     en: 'Examples',
   },
-  'explanations.note': {
-    fr: '(Les exemples restent en français)',
-    en: '(Examples remain in French)',
-  },
   'explanations.passecompose.title': {
     fr: 'Le passé composé',
     en: 'The Passé Composé',

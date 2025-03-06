@@ -130,7 +130,7 @@ function Explication() {
               <p>ils/elles <strong>-aient</strong></p>
             </div>
 
-            <h3>{t('explanations.examples')} <span className="note">{t('explanations.note')}</span></h3>
+            <h3>{t('explanations.examples')}</h3>
             <ul>
               <li>Quand j'étais petit, je jouais souvent au parc.</li>
               <li>Il faisait beau hier, mais j'avais trop de devoirs.</li>
@@ -170,7 +170,7 @@ function Explication() {
               <p>ils <strong>sont</strong> allés / elles <strong>sont</strong> allées</p>
             </div>
 
-            <h3>{t('explanations.examples')} <span className="note">{t('explanations.note')}</span></h3>
+            <h3>{t('explanations.examples')}</h3>
             <ul>
               <li>J'ai mangé un sandwich à midi.</li>
               <li>Hier, nous sommes allés au cinéma.</li>
@@ -200,7 +200,7 @@ function Explication() {
               </div>
             </div>
 
-            <h3>{t('explanations.comparison.phrases')} <span className="note">{t('explanations.note')}</span></h3>
+            <h3>{t('explanations.comparison.phrases')}</h3>
             <ul>
               <li>Il <strong>pleuvait</strong> (imparfait - contexte) quand je <strong>suis sorti</strong> (passé composé - action ponctuelle).</li>
               <li>Je <strong>dormais</strong> (imparfait - action en cours) quand le téléphone <strong>a sonné</strong> (passé composé - interruption).</li>
