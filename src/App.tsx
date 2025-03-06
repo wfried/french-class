@@ -1098,7 +1098,7 @@ function Quiz() {
             const buttonClass = isAnswered
               ? isCorrectAnswer
                 ? 'correct'
-                : option === answeredQuestions[answeredQuestions.length - 1] ? 'incorrect' : ''
+                : feedback === 'incorrect' ? 'incorrect' : ''
               : '';
             
             return (

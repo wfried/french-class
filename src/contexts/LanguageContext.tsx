@@ -2,6 +2,15 @@ import { createContext, useState, useContext, ReactNode } from 'react';
 
 type Language = 'fr' | 'en';
 
+interface Translation {
+  fr: string;
+  en: string;
+}
+
+interface Translations {
+  [key: string]: Translation;
+}
+
 interface LanguageContextType {
   language: Language;
   setLanguage: (lang: Language) => void;
@@ -12,7 +21,7 @@ interface LanguageContextType {
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 // Translations
-const translations = {
+const translations: Translations = {
   // Navigation
   'nav.home': {
     fr: 'Accueil',
