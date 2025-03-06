@@ -48,9 +48,14 @@ const translations = {
     fr: 'Pour décrire des actions continues, habituelles ou des situations dans le passé.',
     en: 'Used to describe continuous actions, habits, or situations in the past.',
   },
+  'home.example': {
+    fr: 'Exemple:',
+    en: 'Example:',
+  },
+  // Examples should remain in French in both languages
   'home.imparfait.example': {
     fr: 'Je jouais au foot tous les jours.',
-    en: 'I used to play soccer every day.',
+    en: 'Je jouais au foot tous les jours.',
   },
   'home.passecompose.title': {
     fr: 'Le passé composé',
@@ -62,7 +67,7 @@ const translations = {
   },
   'home.passecompose.example': {
     fr: 'J\'ai joué au foot hier.',
-    en: 'I played soccer yesterday.',
+    en: 'J\'ai joué au foot hier.',
   },
   'home.instructions': {
     fr: 'Clique sur "Explications" pour en savoir plus, ou essaie les exercices et le quiz!',
@@ -117,6 +122,10 @@ const translations = {
   'explanations.examples': {
     fr: 'Exemples',
     en: 'Examples',
+  },
+  'explanations.note': {
+    fr: '(Les exemples restent en français)',
+    en: '(Examples remain in French)',
   },
   'explanations.passecompose.title': {
     fr: 'Le passé composé',
@@ -239,6 +248,27 @@ const translations = {
   'exercises.restart': {
     fr: 'Recommencer',
     en: 'Restart',
+  },
+  // Exercise explanations
+  'exercises.exp.imparfait.habit': {
+    fr: 'Imparfait pour une habitude dans le passé.',
+    en: 'Imparfait for a habit in the past.',
+  },
+  'exercises.exp.passecompose.specific': {
+    fr: 'Passé composé pour un événement spécifique et fini.',
+    en: 'Passé composé for a specific and completed event.',
+  },
+  'exercises.exp.imparfait.simultaneous': {
+    fr: 'Imparfait pour deux actions simultanées qui servent de contexte.',
+    en: 'Imparfait for two simultaneous actions that provide context.',
+  },
+  'exercises.exp.passecompose.precise': {
+    fr: 'Passé composé pour une action terminée à un moment précis.',
+    en: 'Passé composé for a completed action at a specific time.',
+  },
+  'exercises.exp.imparfait.situation': {
+    fr: 'Imparfait pour décrire une situation passée et une possession.',
+    en: 'Imparfait to describe a past situation and possession.',
   },
   
   // Quiz page

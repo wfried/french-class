@@ -192,6 +192,14 @@ footer {
   margin-left: 1rem;
 }
 
+.note {
+  font-size: 0.8rem;
+  font-style: italic;
+  color: #666;
+  margin-left: 0.5rem;
+  font-weight: normal;
+}
+
 .conjugaison {
   background-color: var(--background-color);
   padding: 1rem;

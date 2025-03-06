@@ -67,12 +67,12 @@ function Accueil() {
         <div className="card">
           <h3>{t('home.imparfait.title')}</h3>
           <p>{t('home.imparfait.desc')}</p>
-          <p>Exemple: <em>{t('home.imparfait.example')}</em></p>
+          <p>{t('home.example')} <em>{t('home.imparfait.example')}</em></p>
         </div>
         <div className="card">
           <h3>{t('home.passecompose.title')}</h3>
           <p>{t('home.passecompose.desc')}</p>
-          <p>Exemple: <em>{t('home.passecompose.example')}</em></p>
+          <p>{t('home.example')} <em>{t('home.passecompose.example')}</em></p>
         </div>
       </div>
       <p className="instructions">{t('home.instructions')}</p>
@@ -130,7 +130,7 @@ function Explication() {
               <p>ils/elles <strong>-aient</strong></p>
             </div>
 
-            <h3>{t('explanations.examples')}</h3>
+            <h3>{t('explanations.examples')} <span className="note">{t('explanations.note')}</span></h3>
             <ul>
               <li>Quand j'étais petit, je jouais souvent au parc.</li>
               <li>Il faisait beau hier, mais j'avais trop de devoirs.</li>
@@ -170,7 +170,7 @@ function Explication() {
               <p>ils <strong>sont</strong> allés / elles <strong>sont</strong> allées</p>
             </div>
 
-            <h3>{t('explanations.examples')}</h3>
+            <h3>{t('explanations.examples')} <span className="note">{t('explanations.note')}</span></h3>
             <ul>
               <li>J'ai mangé un sandwich à midi.</li>
               <li>Hier, nous sommes allés au cinéma.</li>
@@ -200,7 +200,7 @@ function Explication() {
               </div>
             </div>
 
-            <h3>{t('explanations.comparison.phrases')}</h3>
+            <h3>{t('explanations.comparison.phrases')} <span className="note">{t('explanations.note')}</span></h3>
             <ul>
               <li>Il <strong>pleuvait</strong> (imparfait - contexte) quand je <strong>suis sorti</strong> (passé composé - action ponctuelle).</li>
               <li>Je <strong>dormais</strong> (imparfait - action en cours) quand le téléphone <strong>a sonné</strong> (passé composé - interruption).</li>
@@ -225,35 +225,35 @@ function Exercices() {
       sentence: "Quand j'étais petit, je _____ (jouer) souvent au parc.",
       options: ["jouais", "ai joué"],
       correctAnswer: "jouais",
-      explanation: "Imparfait pour une habitude dans le passé."
+      explanation: t('exercises.exp.imparfait.habit')
     },
     {
       id: 2,
       sentence: "Hier, j'_____ (aller) au cinéma avec mes amis.",
       options: ["allais", "suis allé"],
       correctAnswer: "suis allé",
-      explanation: "Passé composé pour un événement spécifique et fini."
+      explanation: t('exercises.exp.passecompose.specific')
     },
     {
       id: 3, 
       sentence: "Pendant que je _____ (faire) mes devoirs, ma mère _____ (préparer) le dîner.",
       options: ["faisais / préparait", "ai fait / a préparé", "faisais / a préparé"],
       correctAnswer: "faisais / préparait",
-      explanation: "Imparfait pour deux actions simultanées qui servent de contexte."
+      explanation: t('exercises.exp.imparfait.simultaneous')
     },
     {
       id: 4,
       sentence: "L'année dernière, nous _____ (visiter) le musée du Louvre.",
       options: ["visitions", "avons visité"],
       correctAnswer: "avons visité",
-      explanation: "Passé composé pour une action terminée à un moment précis."
+      explanation: t('exercises.exp.passecompose.precise')
     },
     {
       id: 5,
       sentence: "Quand j'_____ (être) enfant, je _____ (avoir) un chien.",
       options: ["étais / avais", "ai été / ai eu", "étais / ai eu"],
       correctAnswer: "étais / avais",
-      explanation: "Imparfait pour décrire une situation passée et une possession."
+      explanation: t('exercises.exp.imparfait.situation')
     }
   ];
 
