@@ -1,37 +1,43 @@
 import { useState, useEffect } from 'react'
 import './App.css'
+import { useLanguage } from './contexts/LanguageContext'
+import { LanguageSelector } from './components/LanguageSelector'
 
 function App() {
   const [activeSection, setActiveSection] = useState<'accueil' | 'explication' | 'exercices' | 'quiz'>('accueil');
+  const { t } = useLanguage();
 
   return (
     <div className="app-container">
       <header>
-        <h1>Imparfait vs Passé Composé</h1>
+        <div className="header-content">
+          <h1>Imparfait vs Passé Composé</h1>
+          <LanguageSelector />
+        </div>
         <nav>
           <button 
             className={activeSection === 'accueil' ? 'active' : ''} 
             onClick={() => setActiveSection('accueil')}
           >
-            Accueil
+            {t('nav.home')}
           </button>
           <button 
             className={activeSection === 'explication' ? 'active' : ''} 
             onClick={() => setActiveSection('explication')}
           >
-            Explications
+            {t('nav.explanations')}
           </button>
           <button 
             className={activeSection === 'exercices' ? 'active' : ''} 
             onClick={() => setActiveSection('exercices')}
           >
-            Exercices
+            {t('nav.exercises')}
           </button>
           <button 
             className={activeSection === 'quiz' ? 'active' : ''} 
             onClick={() => setActiveSection('quiz')}
           >
-            Quiz
+            {t('nav.quiz')}
           </button>
         </nav>
       </header>
@@ -44,36 +50,39 @@ function App() {
       </main>
 
       <footer>
-        <p>Créé pour les élèves de Français 2</p>
+        <p>{t('footer.text')}</p>
       </footer>
     </div>
   )
 }
 
 function Accueil() {
+  const { t } = useLanguage();
+  
   return (
     <div className="section accueil">
-      <h2>Bienvenue!</h2>
-      <p>Cette application va t'aider à comprendre la différence entre l'imparfait et le passé composé.</p>
+      <h2>{t('home.welcome')}</h2>
+      <p>{t('home.intro')}</p>
       <div className="info-cards">
         <div className="card">
-          <h3>L'imparfait</h3>
-          <p>Pour décrire des actions continues, habituelles ou des situations dans le passé.</p>
-          <p>Exemple: <em>Je jouais au foot tous les jours.</em></p>
+          <h3>{t('home.imparfait.title')}</h3>
+          <p>{t('home.imparfait.desc')}</p>
+          <p>Exemple: <em>{t('home.imparfait.example')}</em></p>
         </div>
         <div className="card">
-          <h3>Le passé composé</h3>
-          <p>Pour des actions complètes ou des événements spécifiques dans le passé.</p>
-          <p>Exemple: <em>J'ai joué au foot hier.</em></p>
+          <h3>{t('home.passecompose.title')}</h3>
+          <p>{t('home.passecompose.desc')}</p>
+          <p>Exemple: <em>{t('home.passecompose.example')}</em></p>
         </div>
       </div>
-      <p className="instructions">Clique sur "Explications" pour en savoir plus, ou essaie les exercices et le quiz!</p>
+      <p className="instructions">{t('home.instructions')}</p>
     </div>
   )
 }
 
 function Explication() {
   const [activeTab, setActiveTab] = useState<'imparfait' | 'passeCompose' | 'comparaison'>('imparfait');
+  const { t } = useLanguage();
 
   return (
     <div className="section explication">
@@ -82,36 +91,36 @@ function Explication() {
           className={activeTab === 'imparfait' ? 'active' : ''} 
           onClick={() => setActiveTab('imparfait')}
         >
-          L'imparfait
+          {t('explanations.imparfait.tab')}
         </button>
         <button 
           className={activeTab === 'passeCompose' ? 'active' : ''} 
           onClick={() => setActiveTab('passeCompose')}
         >
-          Le passé composé
+          {t('explanations.passecompose.tab')}
         </button>
         <button 
           className={activeTab === 'comparaison' ? 'active' : ''} 
           onClick={() => setActiveTab('comparaison')}
         >
-          Comparaison
+          {t('explanations.comparison.tab')}
         </button>
       </div>
 
       <div className="tab-content">
         {activeTab === 'imparfait' && (
           <div>
-            <h2>L'imparfait</h2>
-            <h3>Quand utiliser l'imparfait?</h3>
+            <h2>{t('explanations.imparfait.title')}</h2>
+            <h3>{t('explanations.imparfait.when')}</h3>
             <ul>
-              <li>Pour décrire une situation ou un contexte dans le passé</li>
-              <li>Pour parler d'actions habituelles ou répétées dans le passé</li>
-              <li>Pour décrire des actions en cours dans le passé</li>
-              <li>Pour parler d'états physiques ou émotionnels dans le passé</li>
+              <li>{t('explanations.imparfait.use1')}</li>
+              <li>{t('explanations.imparfait.use2')}</li>
+              <li>{t('explanations.imparfait.use3')}</li>
+              <li>{t('explanations.imparfait.use4')}</li>
             </ul>
 
-            <h3>Formation</h3>
-            <p>Radical de la 1ère personne du pluriel au présent (nous) + terminaisons:</p>
+            <h3>{t('explanations.formation')}</h3>
+            <p>{t('explanations.imparfait.formation')}</p>
             <div className="conjugaison">
               <p>je <strong>-ais</strong></p>
               <p>tu <strong>-ais</strong></p>
@@ -121,7 +130,7 @@ function Explication() {
               <p>ils/elles <strong>-aient</strong></p>
             </div>
 
-            <h3>Exemples</h3>
+            <h3>{t('explanations.examples')}</h3>
             <ul>
               <li>Quand j'étais petit, je jouais souvent au parc.</li>
               <li>Il faisait beau hier, mais j'avais trop de devoirs.</li>
@@ -132,19 +141,19 @@ function Explication() {
 
         {activeTab === 'passeCompose' && (
           <div>
-            <h2>Le passé composé</h2>
-            <h3>Quand utiliser le passé composé?</h3>
+            <h2>{t('explanations.passecompose.title')}</h2>
+            <h3>{t('explanations.passecompose.when')}</h3>
             <ul>
-              <li>Pour parler d'actions complètes et finies dans le passé</li>
-              <li>Pour une séquence d'événements</li>
-              <li>Pour des actions avec un début et une fin clairs</li>
-              <li>Pour des actions spécifiques à un moment précis</li>
+              <li>{t('explanations.passecompose.use1')}</li>
+              <li>{t('explanations.passecompose.use2')}</li>
+              <li>{t('explanations.passecompose.use3')}</li>
+              <li>{t('explanations.passecompose.use4')}</li>
             </ul>
 
-            <h3>Formation</h3>
-            <p>Auxiliaire (avoir ou être) conjugué au présent + participe passé</p>
+            <h3>{t('explanations.formation')}</h3>
+            <p>{t('explanations.passecompose.formation')}</p>
             <div className="conjugaison">
-              <h4>Avec avoir:</h4>
+              <h4>{t('explanations.auxiliary.avoir')}</h4>
               <p>j'<strong>ai</strong> mangé</p>
               <p>tu <strong>as</strong> mangé</p>
               <p>il/elle/on <strong>a</strong> mangé</p>
@@ -152,7 +161,7 @@ function Explication() {
               <p>vous <strong>avez</strong> mangé</p>
               <p>ils/elles <strong>ont</strong> mangé</p>
 
-              <h4>Avec être (verbes de mouvement et réfléchis):</h4>
+              <h4>{t('explanations.auxiliary.etre')}</h4>
               <p>je <strong>suis</strong> allé(e)</p>
               <p>tu <strong>es</strong> allé(e)</p>
               <p>il <strong>est</strong> allé / elle <strong>est</strong> allée</p>
@@ -161,7 +170,7 @@ function Explication() {
               <p>ils <strong>sont</strong> allés / elles <strong>sont</strong> allées</p>
             </div>
 
-            <h3>Exemples</h3>
+            <h3>{t('explanations.examples')}</h3>
             <ul>
               <li>J'ai mangé un sandwich à midi.</li>
               <li>Hier, nous sommes allés au cinéma.</li>
@@ -172,26 +181,26 @@ function Explication() {
 
         {activeTab === 'comparaison' && (
           <div>
-            <h2>Comparaison: Imparfait vs Passé Composé</h2>
+            <h2>{t('explanations.comparison.title')}</h2>
             
             <div className="comparison-table">
               <div className="imparfait-col">
-                <h3>L'imparfait</h3>
-                <p>Action <strong>continue</strong> ou <strong>habituelle</strong></p>
-                <p>Décrit le <strong>contexte</strong> ou la <strong>situation</strong></p>
-                <p>Pas de durée précise</p>
-                <p>Répond à: <strong>Comment c'était?</strong></p>
+                <h3>{t('explanations.imparfait.title')}</h3>
+                <p>{t('explanations.imparfait.action')}</p>
+                <p>{t('explanations.imparfait.describes')}</p>
+                <p>{t('explanations.imparfait.duration')}</p>
+                <p>{t('explanations.imparfait.answers')}</p>
               </div>
               <div className="passe-compose-col">
-                <h3>Le passé composé</h3>
-                <p>Action <strong>complète</strong> ou <strong>ponctuelle</strong></p>
-                <p>Raconte <strong>ce qui s'est passé</strong></p>
-                <p>Moment spécifique</p>
-                <p>Répond à: <strong>Qu'est-ce qui s'est passé?</strong></p>
+                <h3>{t('explanations.passecompose.title')}</h3>
+                <p>{t('explanations.passecompose.action')}</p>
+                <p>{t('explanations.passecompose.describes')}</p>
+                <p>{t('explanations.passecompose.duration')}</p>
+                <p>{t('explanations.passecompose.answers')}</p>
               </div>
             </div>
 
-            <h3>Phrases avec les deux temps</h3>
+            <h3>{t('explanations.comparison.phrases')}</h3>
             <ul>
               <li>Il <strong>pleuvait</strong> (imparfait - contexte) quand je <strong>suis sorti</strong> (passé composé - action ponctuelle).</li>
               <li>Je <strong>dormais</strong> (imparfait - action en cours) quand le téléphone <strong>a sonné</strong> (passé composé - interruption).</li>
@@ -205,6 +214,7 @@ function Explication() {
 }
 
 function Exercices() {
+  const { t } = useLanguage();
   const [currentExercise, setCurrentExercise] = useState(0);
   const [userAnswers, setUserAnswers] = useState<string[]>(Array(exerciseData.length).fill(''));
   const [showResults, setShowResults] = useState(false);
@@ -283,22 +293,22 @@ function Exercices() {
     const score = calculateScore();
     return (
       <div className="section exercices results">
-        <h2>Résultats</h2>
-        <p className="score">Ton score: {score}/{exerciseData.length}</p>
+        <h2>{t('exercises.results.title')}</h2>
+        <p className="score">{t('exercises.score')} {score}/{exerciseData.length}</p>
         
         <div className="results-list">
           {exerciseData.map((exercise, index) => (
             <div key={exercise.id} className={`result-item ${userAnswers[index] === exercise.correctAnswer ? 'correct' : 'incorrect'}`}>
               <p>{exercise.sentence}</p>
-              <p>Ta réponse: <strong>{userAnswers[index] || "Pas de réponse"}</strong></p>
-              <p>Réponse correcte: <strong>{exercise.correctAnswer}</strong></p>
+              <p>{t('exercises.answer')} <strong>{userAnswers[index] || t('exercises.noAnswer')}</strong></p>
+              <p>{t('exercises.correctAnswer')} <strong>{exercise.correctAnswer}</strong></p>
               <p>{exercise.explanation}</p>
             </div>
           ))}
         </div>
         
         <button className="restart-btn" onClick={restartExercises}>
-          Recommencer
+          {t('exercises.restart')}
         </button>
       </div>
     );
@@ -308,8 +318,8 @@ function Exercices() {
   
   return (
     <div className="section exercices">
-      <h2>Exercices</h2>
-      <p className="progress">Exercice {currentExercise + 1}/{exerciseData.length}</p>
+      <h2>{t('exercises.title')}</h2>
+      <p className="progress">{t('exercises.progress')} {currentExercise + 1}/{exerciseData.length}</p>
       
       <div className="exercise-container">
         <p className="exercise-sentence">{exercise.sentence}</p>
@@ -331,10 +341,10 @@ function Exercices() {
             onClick={goToPreviousExercise} 
             disabled={currentExercise === 0}
           >
-            Précédent
+            {t('exercises.previous')}
           </button>
           <button onClick={goToNextExercise}>
-            {currentExercise === exerciseData.length - 1 ? 'Voir les résultats' : 'Suivant'}
+            {currentExercise === exerciseData.length - 1 ? t('exercises.results') : t('exercises.next')}
           </button>
         </div>
       </div>
@@ -343,6 +353,7 @@ function Exercices() {
 }
 
 function Quiz() {
+  const { t } = useLanguage();
   const [gameState, setGameState] = useState<'start' | 'playing' | 'gameOver'>('start');
   const [score, setScore] = useState(0);
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -485,13 +496,13 @@ function Quiz() {
   if (gameState === 'start') {
     return (
       <div className="section quiz">
-        <h2>Quiz - Imparfait ou Passé Composé?</h2>
+        <h2>{t('quiz.title')}</h2>
         <div className="quiz-intro">
-          <p>Ce quiz va tester ta compréhension de l'imparfait et du passé composé.</p>
-          <p>Tu as 20 secondes pour répondre à chaque question.</p>
-          <p>Choisis la forme verbale correcte pour chaque phrase.</p>
+          <p>{t('quiz.intro1')}</p>
+          <p>{t('quiz.intro2')}</p>
+          <p>{t('quiz.intro3')}</p>
           <button className="start-btn" onClick={handleStartGame}>
-            Commencer le Quiz!
+            {t('quiz.start')}
           </button>
         </div>
       </div>
@@ -501,13 +512,13 @@ function Quiz() {
   if (gameState === 'gameOver') {
     return (
       <div className="section quiz game-over">
-        <h2>Quiz Terminé!</h2>
-        <p className="final-score">Score Final: {score} points</p>
-        <p>Erreurs: {mistakes}</p>
-        <p>Perfection: {mistakes === 0 ? "Oui! 🌟" : "Pas encore"}</p>
+        <h2>{t('quiz.gameover')}</h2>
+        <p className="final-score">{t('quiz.finalscore')} {score} points</p>
+        <p>{t('quiz.errors')} {mistakes}</p>
+        <p>{t('quiz.perfect')} {mistakes === 0 ? t('quiz.perfect.yes') : t('quiz.perfect.no')}</p>
         
         <button className="restart-btn" onClick={handleStartGame}>
-          Rejouer
+          {t('quiz.replay')}
         </button>
       </div>
     );
@@ -518,9 +529,9 @@ function Quiz() {
   return (
     <div className="section quiz playing">
       <div className="quiz-header">
-        <p className="score">Score: {score}</p>
-        <p className="time-left">Temps: {timeLeft}s</p>
-        <p className="question-number">Question {currentQuestion + 1}/{quizData.length}</p>
+        <p className="score">{t('quiz.score')} {score}</p>
+        <p className="time-left">{t('quiz.time')} {timeLeft}s</p>
+        <p className="question-number">{t('quiz.question')} {currentQuestion + 1}/{quizData.length}</p>
       </div>
       
       <div className="question-container">
