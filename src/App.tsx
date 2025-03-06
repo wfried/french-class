@@ -364,7 +364,9 @@ function Quiz() {
   const [answeredQuestions, setAnsweredQuestions] = useState<number[]>([]);
   const [incorrectAnswers, setIncorrectAnswers] = useState<{questionId: number, selectedAnswer: string}[]>([]);
 
-  const quizData = [
+  // All 50 possible quiz questions
+  const allQuizQuestions = [
+    // Original 8 questions
     {
       id: 1,
       scenario: "Tu racontes ton week-end à ton ami:",
@@ -436,8 +438,396 @@ function Quiz() {
       correctAnswer: "ai été / avait",
       tense: "passé composé + plus-que-parfait",
       explanation: "Le passé composé pour l'événement principal, le plus-que-parfait pour l'action antérieure."
+    },
+    
+    // Additional 42 questions
+    {
+      id: 9,
+      scenario: "Tu parles de ta routine d'avant:",
+      question: "Quand j'_____ à l'école primaire, je _____ à pied tous les jours.",
+      options: ["étais / allais", "ai été / suis allé(e)", "étais / suis allé(e)"],
+      correctAnswer: "étais / allais",
+      tense: "imparfait + imparfait",
+      explanation: "L'imparfait pour décrire une routine ou une habitude dans le passé."
+    },
+    {
+      id: 10,
+      scenario: "Tu parles d'un événement précis:",
+      question: "Hier soir, nous _____ un excellent dîner au restaurant.",
+      options: ["avons mangé", "mangions"],
+      correctAnswer: "avons mangé",
+      tense: "passé composé",
+      explanation: "Le passé composé pour une action terminée à un moment précis (hier soir)."
+    },
+    {
+      id: 11,
+      scenario: "Tu décris le temps lors d'un événement:",
+      question: "Quand nous sommes arrivés à la plage, il _____ et le soleil _____.",
+      options: ["pleuvait / brillait", "a plu / a brillé", "pleuvait / a brillé"],
+      correctAnswer: "pleuvait / brillait",
+      tense: "imparfait + imparfait",
+      explanation: "L'imparfait pour décrire les conditions météorologiques qui forment le contexte."
+    },
+    {
+      id: 12,
+      scenario: "Tu racontes une rencontre importante:",
+      question: "J'_____ mes clés quand j'_____ mon ancien camarade de classe.",
+      options: ["ai perdu / ai rencontré", "perdais / ai rencontré", "perdais / rencontrais"],
+      correctAnswer: "ai perdu / ai rencontré",
+      tense: "passé composé + passé composé",
+      explanation: "Le passé composé pour deux actions ponctuelles successives."
+    },
+    {
+      id: 13,
+      scenario: "Tu parles de ton état dans le passé:",
+      question: "Je _____ très fatigué après l'examen, alors je _____ une sieste.",
+      options: ["étais / ai fait", "ai été / faisais", "ai été / ai fait"],
+      correctAnswer: "étais / ai fait",
+      tense: "imparfait + passé composé",
+      explanation: "L'imparfait pour décrire un état et le passé composé pour une action qui en résulte."
+    },
+    {
+      id: 14,
+      scenario: "Tu parles d'une action interrompue:",
+      question: "Je _____ la télé quand mon téléphone _____.",
+      options: ["regardais / a sonné", "ai regardé / sonnait", "regardais / sonnait"],
+      correctAnswer: "regardais / a sonné",
+      tense: "imparfait + passé composé",
+      explanation: "L'imparfait pour une action en cours, le passé composé pour l'interruption."
+    },
+    {
+      id: 15,
+      scenario: "Tu racontes un événement passé:",
+      question: "L'an dernier, je _____ mon diplôme et je _____ mon premier emploi.",
+      options: ["obtenais / trouvais", "ai obtenu / ai trouvé", "ai obtenu / trouvais"],
+      correctAnswer: "ai obtenu / ai trouvé",
+      tense: "passé composé + passé composé",
+      explanation: "Le passé composé pour des événements ponctuels et terminés."
+    },
+    {
+      id: 16,
+      scenario: "Tu parles de ton ancienne maison:",
+      question: "Quand j'_____ enfant, nous _____ dans une grande maison près de la mer.",
+      options: ["étais / habitions", "ai été / avons habité", "étais / avons habité"],
+      correctAnswer: "étais / habitions",
+      tense: "imparfait + imparfait",
+      explanation: "L'imparfait pour décrire des situations durables dans le passé."
+    },
+    {
+      id: 17,
+      scenario: "Tu parles de ta matinée aujourd'hui:",
+      question: "Ce matin, je _____ à 7h et je _____ directement à la douche.",
+      options: ["me réveillais / allais", "me suis réveillé(e) / suis allé(e)", "me suis réveillé(e) / allais"],
+      correctAnswer: "me suis réveillé(e) / suis allé(e)",
+      tense: "passé composé + passé composé",
+      explanation: "Le passé composé pour des actions terminées dans un passé proche."
+    },
+    {
+      id: 18,
+      scenario: "Tu racontes une surprise:",
+      question: "Pendant que nous _____, nos amis nous _____ une fête surprise.",
+      options: ["dormions / ont préparé", "avons dormi / préparaient", "dormions / préparaient"],
+      correctAnswer: "dormions / ont préparé",
+      tense: "imparfait + passé composé",
+      explanation: "L'imparfait pour une action en cours et le passé composé pour une action complète."
+    },
+    {
+      id: 19,
+      scenario: "Tu parles de tes vacances d'enfance:",
+      question: "Chaque été, nous _____ en Bretagne et nous _____ à la plage.",
+      options: ["allions / jouions", "sommes allés / avons joué", "allions / avons joué"],
+      correctAnswer: "allions / jouions",
+      tense: "imparfait + imparfait",
+      explanation: "L'imparfait pour des habitudes ou des activités régulières dans le passé."
+    },
+    {
+      id: 20,
+      scenario: "Tu parles d'un moment précis:",
+      question: "À midi exactement, le président _____ son discours devant la foule.",
+      options: ["commençait", "a commencé"],
+      correctAnswer: "a commencé",
+      tense: "passé composé",
+      explanation: "Le passé composé pour un événement ponctuel à un moment précis."
+    },
+    {
+      id: 21,
+      scenario: "Tu décris ta réaction à une nouvelle:",
+      question: "Quand j'_____ la nouvelle, j'_____ très surpris(e).",
+      options: ["ai appris / étais", "apprenais / ai été", "apprenais / étais"],
+      correctAnswer: "ai appris / étais",
+      tense: "passé composé + imparfait",
+      explanation: "Le passé composé pour l'événement déclencheur et l'imparfait pour l'état qui en résulte."
+    },
+    {
+      id: 22,
+      scenario: "Tu parles d'une activité passée:",
+      question: "Autrefois, les gens _____ leur linge à la main.",
+      options: ["lavaient", "ont lavé"],
+      correctAnswer: "lavaient",
+      tense: "imparfait",
+      explanation: "L'imparfait pour une habitude ou une action typique dans le passé."
+    },
+    {
+      id: 23,
+      scenario: "Tu racontes un événement sportif:",
+      question: "À la fin du match, notre équipe _____ et tout le monde _____.",
+      options: ["gagnait / applaudissait", "a gagné / a applaudi", "a gagné / applaudissait"],
+      correctAnswer: "a gagné / a applaudi",
+      tense: "passé composé + passé composé",
+      explanation: "Le passé composé pour des actions ponctuelles successives."
+    },
+    {
+      id: 24,
+      scenario: "Tu décris l'ambiance d'une soirée:",
+      question: "Pendant la fête, la musique _____ forte et les gens _____.",
+      options: ["était / dansaient", "a été / ont dansé", "était / ont dansé"],
+      correctAnswer: "était / dansaient",
+      tense: "imparfait + imparfait",
+      explanation: "L'imparfait pour décrire l'ambiance et les actions en cours."
+    },
+    {
+      id: 25,
+      scenario: "Tu racontes une dispute:",
+      question: "Nous _____ quand soudain, elle _____ et _____.",
+      options: ["discutions / s'est levée / est partie", "avons discuté / se levait / partait", "discutions / se levait / partait"],
+      correctAnswer: "discutions / s'est levée / est partie",
+      tense: "imparfait + passé composé + passé composé",
+      explanation: "L'imparfait pour l'action en cours, le passé composé pour les actions ponctuelles qui suivent."
+    },
+    {
+      id: 26,
+      scenario: "Tu parles de tes goûts d'enfance:",
+      question: "Quand j'étais petit(e), je _____ les épinards mais j'_____ le chocolat.",
+      options: ["détestais / adorais", "ai détesté / ai adoré", "détestais / ai adoré"],
+      correctAnswer: "détestais / adorais",
+      tense: "imparfait + imparfait",
+      explanation: "L'imparfait pour exprimer des goûts ou des préférences dans le passé."
+    },
+    {
+      id: 27,
+      scenario: "Tu racontes un déménagement:",
+      question: "Nous _____ dans notre nouvelle maison le 15 juin dernier.",
+      options: ["emménagions", "avons emménagé"],
+      correctAnswer: "avons emménagé",
+      tense: "passé composé",
+      explanation: "Le passé composé pour un événement ponctuel à une date précise."
+    },
+    {
+      id: 28,
+      scenario: "Tu parles d'un accident:",
+      question: "La route _____ mouillée quand la voiture _____ dans le fossé.",
+      options: ["était / est tombée", "a été / tombait", "était / tombait"],
+      correctAnswer: "était / est tombée",
+      tense: "imparfait + passé composé",
+      explanation: "L'imparfait pour décrire les circonstances et le passé composé pour l'événement principal."
+    },
+    {
+      id: 29,
+      scenario: "Tu parles d'un spectacle:",
+      question: "Le concert _____ à 20h et _____ trois heures.",
+      options: ["commençait / durait", "a commencé / a duré", "a commencé / durait"],
+      correctAnswer: "a commencé / a duré",
+      tense: "passé composé + passé composé",
+      explanation: "Le passé composé pour des faits précis et délimités dans le temps."
+    },
+    {
+      id: 30,
+      scenario: "Tu décris ton ancienne école:",
+      question: "Mon école primaire _____ grande et _____ un beau jardin.",
+      options: ["était / avait", "a été / a eu", "était / a eu"],
+      correctAnswer: "était / avait",
+      tense: "imparfait + imparfait",
+      explanation: "L'imparfait pour décrire des caractéristiques physiques dans le passé."
+    },
+    {
+      id: 31,
+      scenario: "Tu racontes une découverte:",
+      question: "Je _____ dans le grenier quand j'_____ une vieille photo de famille.",
+      options: ["cherchais / ai trouvé", "ai cherché / trouvais", "cherchais / trouvais"],
+      correctAnswer: "cherchais / ai trouvé",
+      tense: "imparfait + passé composé",
+      explanation: "L'imparfait pour l'action en cours et le passé composé pour l'événement ponctuel."
+    },
+    {
+      id: 32,
+      scenario: "Tu parles d'une série d'actions:",
+      question: "Hier, je _____ mes courses, puis je _____ à la maison et je _____ le dîner.",
+      options: ["ai fait / suis rentré(e) / ai préparé", "faisais / rentrais / préparais", "ai fait / rentrais / ai préparé"],
+      correctAnswer: "ai fait / suis rentré(e) / ai préparé",
+      tense: "passé composé + passé composé + passé composé",
+      explanation: "Le passé composé pour une série d'actions successives et terminées."
+    },
+    {
+      id: 33,
+      scenario: "Tu décris un paysage:",
+      question: "Le soleil _____ et les oiseaux _____ quand nous sommes arrivés à la campagne.",
+      options: ["brillait / chantaient", "a brillé / ont chanté", "a brillé / chantaient"],
+      correctAnswer: "brillait / chantaient",
+      tense: "imparfait + imparfait",
+      explanation: "L'imparfait pour décrire le cadre ou l'arrière-plan d'une scène."
+    },
+    {
+      id: 34,
+      scenario: "Tu racontes un événement historique:",
+      question: "En 1789, la Révolution française _____ et le peuple _____ la Bastille.",
+      options: ["commençait / prenait", "a commencé / a pris", "a commencé / prenait"],
+      correctAnswer: "a commencé / a pris",
+      tense: "passé composé + passé composé",
+      explanation: "Le passé composé pour des événements historiques précis."
+    },
+    {
+      id: 35,
+      scenario: "Tu parles de ta formation:",
+      question: "Pendant que j'_____ à l'université, j'_____ aussi un emploi à temps partiel.",
+      options: ["étais / avais", "ai été / ai eu", "étais / ai eu"],
+      correctAnswer: "étais / avais",
+      tense: "imparfait + imparfait",
+      explanation: "L'imparfait pour des situations parallèles et continues dans le passé."
+    },
+    {
+      id: 36,
+      scenario: "Tu racontes une action soudaine:",
+      question: "Nous _____ tranquillement quand soudain le tonnerre _____.",
+      options: ["dînions / a grondé", "avons dîné / grondait", "dînions / grondait"],
+      correctAnswer: "dînions / a grondé",
+      tense: "imparfait + passé composé",
+      explanation: "L'imparfait pour l'action en cours et le passé composé pour l'événement soudain."
+    },
+    {
+      id: 37,
+      scenario: "Tu racontes une première fois:",
+      question: "La première fois que j'_____ à Paris, j'_____ la tour Eiffel.",
+      options: ["allais / visitais", "suis allé(e) / ai visité", "allais / ai visité"],
+      correctAnswer: "suis allé(e) / ai visité",
+      tense: "passé composé + passé composé",
+      explanation: "Le passé composé pour des actions ponctuelles et uniques."
+    },
+    {
+      id: 38,
+      scenario: "Tu décris une personne:",
+      question: "Ma grand-mère _____ très gentille et elle me _____ toujours des histoires.",
+      options: ["était / racontait", "a été / a raconté", "était / a raconté"],
+      correctAnswer: "était / racontait",
+      tense: "imparfait + imparfait",
+      explanation: "L'imparfait pour les descriptions de personnes et les actions habituelles."
+    },
+    {
+      id: 39,
+      scenario: "Tu parles d'une réalisation:",
+      question: "Après de nombreux essais, elle _____ enfin son examen.",
+      options: ["réussissait", "a réussi"],
+      correctAnswer: "a réussi",
+      tense: "passé composé",
+      explanation: "Le passé composé pour un accomplissement, une réussite ponctuelle."
+    },
+    {
+      id: 40,
+      scenario: "Tu expliques un changement:",
+      question: "Avant, je _____ peur des chiens, mais après avoir adopté Rex, je _____ à les aimer.",
+      options: ["avais / ai commencé", "ai eu / commençais", "avais / commençais"],
+      correctAnswer: "avais / ai commencé",
+      tense: "imparfait + passé composé",
+      explanation: "L'imparfait pour une situation passée, le passé composé pour le changement."
+    },
+    {
+      id: 41,
+      scenario: "Tu racontes une surprise:",
+      question: "Elle _____ son gâteau d'anniversaire quand ses amis _____.",
+      options: ["préparait / sont arrivés", "a préparé / arrivaient", "préparait / arrivaient"],
+      correctAnswer: "préparait / sont arrivés",
+      tense: "imparfait + passé composé",
+      explanation: "L'imparfait pour l'action en cours, le passé composé pour l'arrivée soudaine."
+    },
+    {
+      id: 42,
+      scenario: "Tu parles de ton alimentation passée:",
+      question: "Quand j'étais adolescent(e), je _____ rarement des légumes.",
+      options: ["mangeais", "ai mangé"],
+      correctAnswer: "mangeais",
+      tense: "imparfait",
+      explanation: "L'imparfait pour une habitude alimentaire dans le passé."
+    },
+    {
+      id: 43,
+      scenario: "Tu racontes des vacances:",
+      question: "L'été dernier, nous _____ en Espagne et nous _____ la mer tous les jours.",
+      options: ["allions / profitions de", "sommes allés / avons profité de", "sommes allés / profitions de"],
+      correctAnswer: "sommes allés / avons profité de",
+      tense: "passé composé + passé composé",
+      explanation: "Le passé composé pour des actions terminées pendant une période définie."
+    },
+    {
+      id: 44,
+      scenario: "Tu expliques une rencontre:",
+      question: "Je _____ mes courses quand je _____ Thomas, mon ami d'enfance.",
+      options: ["faisais / ai rencontré", "ai fait / rencontrais", "ai fait / ai rencontré"],
+      correctAnswer: "faisais / ai rencontré",
+      tense: "imparfait + passé composé",
+      explanation: "L'imparfait pour l'activité en cours, le passé composé pour la rencontre imprévue."
+    },
+    {
+      id: 45,
+      scenario: "Tu décris un changement d'état:",
+      question: "Quand elle _____ la nouvelle, elle _____ très heureuse.",
+      options: ["a appris / était", "apprenait / a été", "apprenait / était"],
+      correctAnswer: "a appris / a été",
+      tense: "passé composé + passé composé",
+      explanation: "Le passé composé pour un événement et le changement d'état qui en résulte."
+    },
+    {
+      id: 46,
+      scenario: "Tu racontes une tradition familiale:",
+      question: "Chaque Noël, ma famille _____ un grand repas et nous _____ des cadeaux.",
+      options: ["préparait / échangions", "a préparé / avons échangé", "préparait / avons échangé"],
+      correctAnswer: "préparait / échangions",
+      tense: "imparfait + imparfait",
+      explanation: "L'imparfait pour des traditions ou des habitudes régulières dans le passé."
+    },
+    {
+      id: 47,
+      scenario: "Tu racontes un incident:",
+      question: "Elle _____ quand elle _____ sur une pierre et _____.",
+      options: ["courait / a trébuché / est tombée", "a couru / trébuchait / tombait", "courait / trébuchait / tombait"],
+      correctAnswer: "courait / a trébuché / est tombée",
+      tense: "imparfait + passé composé + passé composé",
+      explanation: "L'imparfait pour l'action en cours, le passé composé pour les incidents ponctuels."
+    },
+    {
+      id: 48,
+      scenario: "Tu parles d'une décision:",
+      question: "Après avoir réfléchi pendant des mois, j'_____ finalement de changer de travail.",
+      options: ["décidais", "ai décidé"],
+      correctAnswer: "ai décidé",
+      tense: "passé composé",
+      explanation: "Le passé composé pour une décision prise à un moment précis."
+    },
+    {
+      id: 49,
+      scenario: "Tu racontes une observation:",
+      question: "Pendant que je _____ par la fenêtre, j'_____ un arc-en-ciel.",
+      options: ["regardais / ai vu", "ai regardé / voyais", "regardais / voyais"],
+      correctAnswer: "regardais / ai vu",
+      tense: "imparfait + passé composé",
+      explanation: "L'imparfait pour l'action continue, le passé composé pour la découverte soudaine."
+    },
+    {
+      id: 50,
+      scenario: "Tu expliques un ancien état:",
+      question: "Autrefois, tout le village _____ de l'agriculture et les gens _____ une vie simple.",
+      options: ["vivait / menaient", "a vécu / ont mené", "vivait / ont mené"],
+      correctAnswer: "vivait / menaient",
+      tense: "imparfait + imparfait",
+      explanation: "L'imparfait pour décrire un mode de vie ou un état durable dans le passé."
     }
   ];
+  
+  // Randomly select 8 questions for this quiz session
+  const getRandomQuestions = () => {
+    const shuffled = [...allQuizQuestions].sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, 8);
+  };
+  
+  // We'll use currentQuestions state instead of this static assignment
 
   // Set up the timer
   useEffect(() => {
@@ -449,7 +839,7 @@ function Quiz() {
           if (prevTime <= 1) {
             // Time's up, record this as an incorrect answer
             setMistakes(prev => prev + 1);
-            const currentQuestionId = quizData[currentQuestion].id;
+            const currentQuestionId = currentQuestions[currentQuestion].id;
             
             // Show "timeout" feedback
             setFeedback('incorrect');
@@ -468,7 +858,7 @@ function Quiz() {
             setTimeout(() => {
               setFeedback(null);
               
-              if (currentQuestion < quizData.length - 1) {
+              if (currentQuestion < currentQuestions.length - 1) {
                 setCurrentQuestion(prev => prev + 1);
                 return 20; // Reset timer
               } else {
@@ -488,9 +878,16 @@ function Quiz() {
     return () => {
       if (timer) clearInterval(timer);
     };
-  }, [gameState, timeLeft, currentQuestion, timerActive, quizData.length, feedback, answeredQuestions, incorrectAnswers]);
+  }, [gameState, timeLeft, currentQuestion, timerActive, currentQuestions.length, feedback, answeredQuestions, incorrectAnswers]);
 
+  // State to store the current set of questions
+  const [currentQuestions, setCurrentQuestions] = useState<typeof allQuizQuestions>(getRandomQuestions());
+  
   const handleStartGame = () => {
+    // Get a new set of random questions each time
+    const newQuestions = getRandomQuestions();
+    setCurrentQuestions(newQuestions);
+    
     setGameState('playing');
     setScore(0);
     setCurrentQuestion(0);
@@ -503,8 +900,8 @@ function Quiz() {
   };
 
   const handleAnswer = (selectedAnswer: string) => {
-    const isCorrect = selectedAnswer === quizData[currentQuestion].correctAnswer;
-    const currentQuestionId = quizData[currentQuestion].id;
+    const isCorrect = selectedAnswer === currentQuestions[currentQuestion].correctAnswer;
+    const currentQuestionId = currentQuestions[currentQuestion].id;
     
     // Show feedback
     setFeedback(isCorrect ? 'correct' : 'incorrect');
@@ -529,7 +926,7 @@ function Quiz() {
       setFeedback(null);
       
       // Move to next question or end game
-      if (currentQuestion < quizData.length - 1) {
+      if (currentQuestion < currentQuestions.length - 1) {
         setCurrentQuestion(currentQuestion + 1);
         setTimeLeft(20); // Reset timer for next question
       } else {
@@ -568,7 +965,8 @@ function Quiz() {
             <h3>{t('quiz.incorrect.heading')}</h3>
             <div className="results-list">
               {incorrectAnswers.map((item) => {
-                const question = quizData.find(q => q.id === item.questionId);
+                // Find matching question in the full list of questions
+                const question = allQuizQuestions.find(q => q.id === item.questionId);
                 if (!question) return null;
                 
                 return (
@@ -592,14 +990,14 @@ function Quiz() {
     );
   }
 
-  const question = quizData[currentQuestion];
+  const question = currentQuestions[currentQuestion];
 
   return (
     <div className="section quiz playing">
       <div className="quiz-header">
         <p className="score">{t('quiz.score')} {score}</p>
         <p className="time-left">{t('quiz.time')} {timeLeft}s</p>
-        <p className="question-number">{t('quiz.question')} {currentQuestion + 1}/{quizData.length}</p>
+        <p className="question-number">{t('quiz.question')} {currentQuestion + 1}/{currentQuestions.length}</p>
       </div>
       
       <div className="question-container">
