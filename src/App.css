@@ -110,11 +110,13 @@ nav button {
   backdrop-filter: blur(2px);
 }
 
-nav button:hover {
-  background-color: rgba(255, 255, 255, 0.15);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-  border-color: rgba(255, 255, 255, 0.5);
+@media (hover: hover) {
+  nav button:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    border-color: rgba(255, 255, 255, 0.5);
+  }
 }
 
 nav button.active {
@@ -175,12 +177,14 @@ footer .repo-link::after {
   transition: width 0.2s ease;
 }
 
-footer .repo-link:hover {
-  opacity: 1;
-}
-
-footer .repo-link:hover::after {
-  width: 100%;
+@media (hover: hover) {
+  footer .repo-link:hover {
+    opacity: 1;
+  }
+  
+  footer .repo-link:hover::after {
+    width: 100%;
+  }
 }
 
 footer .copyright {
@@ -238,9 +242,11 @@ footer .copyright {
   background-image: var(--primary-gradient);
 }
 
-.card:hover {
-  transform: translateY(-5px);
-  box-shadow: var(--box-shadow-hover);
+@media (hover: hover) {
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--box-shadow-hover);
+  }
 }
 
 .card h3 {
@@ -391,10 +397,13 @@ footer .copyright {
   overflow: hidden;
 }
 
-.options button:hover:not(:disabled) {
-  border-color: var(--primary-color);
-  transform: translateY(-2px);
-  box-shadow: var(--box-shadow-hover);
+/* Only show hover effects on non-touch devices */
+@media (hover: hover) {
+  .options button:hover:not(:disabled) {
+    border-color: var(--primary-color);
+    transform: translateY(-2px);
+    box-shadow: var(--box-shadow-hover);
+  }
 }
 
 .options button.selected {
@@ -438,9 +447,11 @@ footer .copyright {
   overflow: hidden;
 }
 
-.navigation-buttons button:hover:not(:disabled) {
-  transform: translateY(-2px);
-  box-shadow: var(--box-shadow-hover);
+@media (hover: hover) {
+  .navigation-buttons button:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: var(--box-shadow-hover);
+  }
 }
 
 .navigation-buttons button:disabled {
@@ -533,9 +544,11 @@ footer .copyright {
   box-shadow: var(--box-shadow);
 }
 
-.restart-btn:hover {
-  transform: translateY(-3px);
-  box-shadow: var(--box-shadow-hover);
+@media (hover: hover) {
+  .restart-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--box-shadow-hover);
+  }
 }
 
 /* Quiz Section */
@@ -563,9 +576,11 @@ footer .copyright {
   transition: var(--transition);
 }
 
-.start-btn:hover {
-  background-color: var(--secondary-dark);
-  transform: scale(1.05);
+@media (hover: hover) {
+  .start-btn:hover {
+    background-color: var(--secondary-dark);
+    transform: scale(1.05);
+  }
 }
 
 .quiz-header {
@@ -672,9 +687,12 @@ footer .copyright {
   transition: var(--transition);
 }
 
-.quiz-options button:hover:not(:disabled) {
-  background-color: var(--secondary-light);
-  color: var(--white);
+/* Only show hover effects on non-touch devices */
+@media (hover: hover) {
+  .quiz-options button:hover:not(:disabled) {
+    background-color: var(--secondary-light);
+    color: var(--white);
+  }
 }
 
 .quiz-options button.correct {
