@@ -360,6 +360,9 @@ function Quiz() {
   const [timeLeft, setTimeLeft] = useState(20);
   const [mistakes, setMistakes] = useState(0);
   const [timerActive, setTimerActive] = useState(false);
+  const [feedback, setFeedback] = useState<'correct' | 'incorrect' | null>(null);
+  const [answeredQuestions, setAnsweredQuestions] = useState<number[]>([]);
+  const [incorrectAnswers, setIncorrectAnswers] = useState<{questionId: number, selectedAnswer: string}[]>([]);
 
   const quizData = [
     {
@@ -440,20 +443,42 @@ function Quiz() {
   useEffect(() => {
     let timer: number | undefined;
     
-    if (gameState === 'playing' && timeLeft > 0 && timerActive) {
+    if (gameState === 'playing' && timeLeft > 0 && timerActive && feedback === null) {
       timer = window.setInterval(() => {
         setTimeLeft((prevTime) => {
           if (prevTime <= 1) {
-            // Time's up, move to next question
-            if (currentQuestion < quizData.length - 1) {
-              setCurrentQuestion(prev => prev + 1);
-              setMistakes(prev => prev + 1);
-              return 20; // Reset timer
-            } else {
-              // End game if it was the last question
-              setGameState('gameOver');
-              return 0;
-            }
+            // Time's up, record this as an incorrect answer
+            setMistakes(prev => prev + 1);
+            const currentQuestionId = quizData[currentQuestion].id;
+            
+            // Show "timeout" feedback
+            setFeedback('incorrect');
+            setAnsweredQuestions([...answeredQuestions, currentQuestionId]);
+            
+            // Add to incorrect answers
+            setIncorrectAnswers([
+              ...incorrectAnswers, 
+              {
+                questionId: currentQuestionId,
+                selectedAnswer: "⏱️ Time's up"
+              }
+            ]);
+            
+            // Move to next question after showing feedback
+            setTimeout(() => {
+              setFeedback(null);
+              
+              if (currentQuestion < quizData.length - 1) {
+                setCurrentQuestion(prev => prev + 1);
+                return 20; // Reset timer
+              } else {
+                // End game if it was the last question
+                setGameState('gameOver');
+                return 0;
+              }
+            }, 1500);
+            
+            return 0; // Stop the timer
           }
           return prevTime - 1;
         });
@@ -463,7 +488,7 @@ function Quiz() {
     return () => {
       if (timer) clearInterval(timer);
     };
-  }, [gameState, timeLeft, currentQuestion, timerActive, quizData.length]);
+  }, [gameState, timeLeft, currentQuestion, timerActive, quizData.length, feedback, answeredQuestions, incorrectAnswers]);
 
   const handleStartGame = () => {
     setGameState('playing');
@@ -472,25 +497,46 @@ function Quiz() {
     setTimeLeft(20);
     setMistakes(0);
     setTimerActive(true);
+    setFeedback(null);
+    setAnsweredQuestions([]);
+    setIncorrectAnswers([]);
   };
 
   const handleAnswer = (selectedAnswer: string) => {
     const isCorrect = selectedAnswer === quizData[currentQuestion].correctAnswer;
+    const currentQuestionId = quizData[currentQuestion].id;
+    
+    // Show feedback
+    setFeedback(isCorrect ? 'correct' : 'incorrect');
+    setAnsweredQuestions([...answeredQuestions, currentQuestionId]);
     
     if (isCorrect) {
       setScore(score + 10);
     } else {
       setMistakes(mistakes + 1);
+      // Store incorrect answer for final results
+      setIncorrectAnswers([
+        ...incorrectAnswers, 
+        {
+          questionId: currentQuestionId,
+          selectedAnswer: selectedAnswer
+        }
+      ]);
     }
     
-    // Move to next question or end game
-    if (currentQuestion < quizData.length - 1) {
-      setCurrentQuestion(currentQuestion + 1);
-      setTimeLeft(20); // Reset timer for next question
-    } else {
-      setGameState('gameOver');
-      setTimerActive(false);
-    }
+    // Set a timeout to move to the next question after showing feedback
+    setTimeout(() => {
+      setFeedback(null);
+      
+      // Move to next question or end game
+      if (currentQuestion < quizData.length - 1) {
+        setCurrentQuestion(currentQuestion + 1);
+        setTimeLeft(20); // Reset timer for next question
+      } else {
+        setGameState('gameOver');
+        setTimerActive(false);
+      }
+    }, 1500); // Show feedback for 1.5 seconds
   };
 
   if (gameState === 'start') {
@@ -517,6 +563,28 @@ function Quiz() {
         <p>{t('quiz.errors')} {mistakes}</p>
         <p>{t('quiz.perfect')} {mistakes === 0 ? t('quiz.perfect.yes') : t('quiz.perfect.no')}</p>
         
+        {incorrectAnswers.length > 0 && (
+          <div className="incorrect-answers">
+            <h3>{t('quiz.incorrect.heading')}</h3>
+            <div className="results-list">
+              {incorrectAnswers.map((item) => {
+                const question = quizData.find(q => q.id === item.questionId);
+                if (!question) return null;
+                
+                return (
+                  <div key={question.id} className="result-item incorrect">
+                    <p className="scenario">{question.scenario}</p>
+                    <p className="question">{question.question}</p>
+                    <p>{t('exercises.answer')} <strong>{item.selectedAnswer}</strong></p>
+                    <p>{t('exercises.correctAnswer')} <strong>{question.correctAnswer}</strong></p>
+                    <p><span className="tense-label">{question.tense}:</span> {question.explanation}</p>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+        
         <button className="restart-btn" onClick={handleStartGame}>
           {t('quiz.replay')}
         </button>
@@ -538,12 +606,39 @@ function Quiz() {
         <p className="scenario">{question.scenario}</p>
         <p className="question">{question.question}</p>
         
+        {feedback && (
+          <div className={`feedback ${feedback}`}>
+            {feedback === 'correct' 
+              ? <p>{t('quiz.feedback.correct')}</p> 
+              : <p>{t('quiz.feedback.incorrect')}</p>
+            }
+            {feedback === 'incorrect' && (
+              <p className="correct-answer">{t('exercises.correctAnswer')} <strong>{question.correctAnswer}</strong></p>
+            )}
+          </div>
+        )}
+        
         <div className="quiz-options">
-          {question.options.map((option) => (
-            <button key={option} onClick={() => handleAnswer(option)}>
-              {option}
-            </button>
-          ))}
+          {question.options.map((option) => {
+            const isAnswered = answeredQuestions.includes(question.id);
+            const isCorrectAnswer = option === question.correctAnswer;
+            const buttonClass = isAnswered
+              ? isCorrectAnswer
+                ? 'correct'
+                : option === answeredQuestions[answeredQuestions.length - 1] ? 'incorrect' : ''
+              : '';
+            
+            return (
+              <button 
+                key={option} 
+                onClick={() => !isAnswered && handleAnswer(option)}
+                className={buttonClass}
+                disabled={isAnswered || feedback !== null}
+              >
+                {option}
+              </button>
+            );
+          })}
         </div>
       </div>
     </div>

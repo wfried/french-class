@@ -332,6 +332,18 @@ const translations = {
     fr: 'Rejouer',
     en: 'Play Again',
   },
+  'quiz.incorrect.heading': {
+    fr: 'Erreurs à corriger:',
+    en: 'Errors to correct:',
+  },
+  'quiz.feedback.correct': {
+    fr: 'Correct!',
+    en: 'Correct!',
+  },
+  'quiz.feedback.incorrect': {
+    fr: 'Incorrect!',
+    en: 'Incorrect!',
+  },
   
   // Footer
   'footer.text': {
