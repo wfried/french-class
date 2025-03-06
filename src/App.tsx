@@ -887,8 +887,32 @@ function Quiz() {
   const [answeredQuestions, setAnsweredQuestions] = useState<number[]>([]);
   const [incorrectAnswers, setIncorrectAnswers] = useState<{questionId: number, selectedAnswer: string}[]>([]);
   
-  // State to store the current set of questions - initialized after the getRandomQuestions function is defined
-  const [currentQuestions, setCurrentQuestions] = useState<typeof allQuizQuestions>(getRandomQuestions());
+  // Helper function to shuffle an array
+  const shuffleArray = <T,>(array: T[]): T[] => {
+    const shuffled = [...array];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
+  };
+  
+  // Process questions to add shuffled options
+  const processQuestions = (questions: typeof allQuizQuestions) => {
+    return questions.map(question => {
+      // Create a copy of the question with shuffled options
+      return {
+        ...question,
+        // Store the original order of options to avoid re-shuffling on re-renders
+        shuffledOptions: shuffleArray([...question.options])
+      };
+    });
+  };
+  
+  // State to store the current set of questions with shuffled options
+  const [currentQuestions, setCurrentQuestions] = useState<(typeof allQuizQuestions[0] & { shuffledOptions: string[] })[]>(
+    processQuestions(getRandomQuestions())
+  );
 
   // Set up the timer
   useEffect(() => {
@@ -942,8 +966,8 @@ function Quiz() {
   }, [gameState, timeLeft, currentQuestion, timerActive, feedback, answeredQuestions, incorrectAnswers, currentQuestions]);
   
   const handleStartGame = () => {
-    // Get a new set of random questions each time
-    const newQuestions = getRandomQuestions();
+    // Get a new set of random questions with shuffled options each time
+    const newQuestions = processQuestions(getRandomQuestions());
     setCurrentQuestions(newQuestions);
     
     setGameState('playing');
@@ -1092,7 +1116,7 @@ function Quiz() {
         )}
         
         <div className="quiz-options">
-          {question.options.map((option) => {
+          {question.shuffledOptions.map((option) => {
             const isAnswered = answeredQuestions.includes(question.id);
             const isCorrectAnswer = option === question.correctAnswer;
             const buttonClass = isAnswered
